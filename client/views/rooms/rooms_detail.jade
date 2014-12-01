@@ -1,0 +1,33 @@
+h1 {{room.name}} by {{room.creator.username}}
+
+.row
+    .small-8.columns
+        button.tiny.radius(ng-click='newGame()', ng-show='readyNewGame') New Game
+        button.tiny.radius(ng-click='joinGame()', ng-show='readyJoinGame') Join Game
+        button.tiny.radius(ng-click='startGame()', ng-show='readyJoinGame && room.creator.username === rootuser.username') Start Game
+        button.tiny.radius.success(ng-click='hit()', ng-show='isPlaying') Hit
+        button.tiny.radius.alert(ng-click='hold()', ng-show='isPlaying') Hold
+
+        table
+            thead
+                tr
+                    th Username
+                    th Avatar
+                    th Number
+                    th Cards
+            tbody
+                tr(ng-repeat='p in players')
+                    td {{p.player.username}}
+                    td: img(style='width:25px;height:25px;', ng-src='{{p.player.avatar}}')
+                    td {{p.cards.length}}
+                    td
+                        .card(ng-repeat='card in p.cards', style='margin:0px 5px 5px 0px;display:inline-block;width:45px;height:65px;background-size:cover;background-image:url("{{card.file}}");')
+
+    .small-4.columns
+        h3 Room Chat
+        #messages.panel.callout.radius
+            .message(ng-repeat='message in messages')
+                .avatar(style='background-image:url("{{message.avatar}}")')
+                .content {{message.content}}
+        input#message(type='text', ng-model='message')
+        button.success.tiny.radius(ng-click='chat(message)') Send Message

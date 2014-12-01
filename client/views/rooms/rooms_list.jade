@@ -1,0 +1,38 @@
+h1 ROOMS
+
+.row
+   .small-8.columns
+      .row
+         .small-12.columns
+            h3 Create a Room
+            .row
+               .small-4.columns
+                  input(type='text', ng-model='room.name', placeholder='Room Name', ng-class='{error: error}')
+               .small-4.columns
+                  input(type='password', ng-model='room.password', placeholder='Password', ng-class='{error: error}')
+               .small-4.columns
+                  button.tiny.radius(ng-click='create(room)') Create Room
+      .row
+         .small-12.columns
+            h3 Room List
+            table#rooms
+               thead
+                  tr
+                     td Owner
+                     td Name
+                     td Password
+                     td Join
+               tbody
+                  tr(ng-repeat='room in rooms| orderBy:"createdAt":true')
+                     td: div.avatar(style='background-image:url("{{room.avatar}}")')
+                     td {{room.name}}
+                     td: input(type='password', ng-model='password')
+                     td: button.tiny.alert.radius(ng-click='join(room)') Join
+   .small-4.columns
+      h3 Global Chat
+      #messages.panel.callout.radius
+         .message(ng-repeat='message in messages')
+            .avatar(style='background-image:url("{{message.avatar}}")')
+            .content {{message.content}}
+      input#message(type='text', ng-model='message')
+      button.success.tiny.radius(ng-click='chat(message)') Send Message
